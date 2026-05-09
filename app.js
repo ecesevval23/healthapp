@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentCategory: null,
         capturedImageBase64: null,
         scannedQRText: null,
+        menuLinkUrl: null,
         userNote: ''
     };
 
@@ -89,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Reset states
         state.capturedImageBase64 = null;
         state.scannedQRText = null;
+        state.menuLinkUrl = null;
         state.userNote = '';
         cameraContainer.classList.add('hidden');
         cameraPreview.classList.add('hidden');
@@ -139,6 +141,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="font-bold text-sm text-gray-800">Fiziksel Menü Fotoğrafla</span>
                     </button>
                 </div>
+
+                <button id="btn-open-link" class="w-full bg-gray-50 border border-gray-200 p-4 mb-4 rounded-[1.5rem] flex items-center justify-center text-center hover:border-primary hover:bg-primary/5 hover:shadow-md transition-all group">
+                    <span class="text-2xl mr-3">🔗</span>
+                    <span class="font-bold text-sm text-gray-800">İnternet Linki (URL) Gir</span>
+                </button>
+
+                <div id="link-input-container" class="hidden bg-gray-50 p-4 rounded-[1.5rem] border border-gray-200 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all mb-4">
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Menü Web Adresi</label>
+                    <input type="url" id="menu-url-input" class="w-full border-none focus:ring-0 p-0 text-sm text-gray-700 outline-none bg-transparent placeholder-gray-400" placeholder="https://ornek-menu.com/menu">
+                </div>
                 
                 <div class="bg-gray-50 p-4 rounded-[1.5rem] border border-gray-200 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all mt-4">
                     <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Canın Ne Çekiyor? (Opsiyonel)</label>
@@ -146,9 +158,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
 
-            // Setup note listener
+            // Setup listeners
             document.getElementById('user-note')?.addEventListener('input', (e) => {
                 state.userNote = e.target.value;
+            });
+
+            const linkInputContainer = document.getElementById('link-input-container');
+            const menuUrlInput = document.getElementById('menu-url-input');
+            const btnOpenLink = document.getElementById('btn-open-link');
+
+            btnOpenLink?.addEventListener('click', () => {
+                linkInputContainer.classList.toggle('hidden');
+            });
+
+            menuUrlInput?.addEventListener('input', (e) => {
+                state.menuLinkUrl = e.target.value;
             });
         }
 
@@ -271,8 +295,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const btnScan = document.getElementById('btn-scan');
     btnScan.addEventListener('click', async () => {
-        if (!state.capturedImageBase64 && !state.scannedQRText) {
-            alert('Lütfen önce bir fotoğraf çekin veya QR okutun!');
+        if (!state.capturedImageBase64 && !state.scannedQRText && !state.menuLinkUrl) {
+            alert('Lütfen fotoğraf çekin, QR okutun veya bir menü linki girin!');
             return;
         }
 
@@ -309,7 +333,11 @@ Yanıtı BANA KESİNLİKLE SADECE AŞAĞIDAKİ JSON ARRAY FORMATINDA DÖN, markd
         parts.push({ text: systemInstruction });
 
         if (state.scannedQRText) {
-            parts.push({ text: `Menü/Ürün içeriği: ${state.scannedQRText}` });
+            parts.push({ text: `Menü/Ürün içeriği metni: ${state.scannedQRText}` });
+        }
+        
+        if (state.menuLinkUrl) {
+            parts.push({ text: `Lütfen bu linkteki menü içeriğini analiz et: ${state.menuLinkUrl}` });
         }
 
         if (state.capturedImageBase64) {
