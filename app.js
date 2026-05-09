@@ -9,8 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
         userNote: ''
     };
 
-    const API_KEY = "AIzaSyCncT7-zAmloSpIOdD5OzQkn7FejJgc7jg";
-
     // DOM Elements Map
     const screens = {
         profile: document.getElementById('screen-profile'),
@@ -312,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const analyzeWithGemini = async () => {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+        const url = '/api/analyze';
         
         let parts = [];
         
