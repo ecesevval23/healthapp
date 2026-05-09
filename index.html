@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kişiselleştirilmiş Gıda ve Sağlık Tarayıcısı</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -233,6 +234,19 @@
                     
                     <div id="scanner-options" class="flex-1 space-y-4">
                         <!-- Dynamic content injected here -->
+                    </div>
+                    
+                    <!-- Camera & QR Container -->
+                    <div id="camera-container" class="hidden flex-col items-center justify-center space-y-4 mb-4">
+                        <video id="camera-video" class="w-full rounded-2xl bg-black hidden" autoplay playsinline></video>
+                        <canvas id="camera-canvas" class="hidden"></canvas>
+                        <img id="camera-preview" class="hidden w-full rounded-2xl border-2 border-primary" />
+                        <div id="qr-reader" class="w-full hidden bg-white rounded-2xl overflow-hidden"></div>
+                        <div class="flex gap-4 w-full" id="camera-controls">
+                            <button id="btn-capture" class="flex-1 bg-gray-800 text-white py-3 rounded-xl font-bold hidden">Fotoğraf Çek</button>
+                            <button id="btn-retake" class="flex-1 bg-gray-200 text-gray-800 py-3 rounded-xl font-bold hidden">Tekrar Çek</button>
+                            <button id="btn-stop-camera" class="flex-1 bg-red-100 text-red-600 py-3 rounded-xl font-bold">Kapat</button>
+                        </div>
                     </div>
                     
                     <div class="mt-8 pb-4">
