@@ -316,16 +316,24 @@ document.addEventListener('DOMContentLoaded', () => {
         
         let parts = [];
         
+        const profileInfo = state.preferences.length > 0 
+            ? state.preferences.join(', ') 
+            : 'Herhangi bir sağlık sorunu veya diyet kısıtlaması yok (Her şeyi yiyebilir).';
+
         const systemInstruction = `Bir gıda/menü uzmanı gibi davran. Görüntüdeki veya metindeki içerikleri analiz et.
-Kullanıcının şu sağlık profiline [${state.preferences.join(', ') || 'Belirtilmedi'}] göre:
-1. Riskli maddeleri bul.
-2. Neden riskli olduğunu açıkla.
-3. Eğer Cafe/Restoran ise kullanıcının şu damak zevki isteğine [${state.userNote || 'Belirtilmedi'}] göre uygun yemekleri öner.
-Yanıtı BANA KESİNLİKLE SADECE AŞAĞIDAKİ JSON ARRAY FORMATINDA DÖN, markdown ( \`\`\`json vb.) KULLANMA, DOĞRUDAN DİZİ (ARRAY) DÖN:
+Kullanıcının profili: [${profileInfo}]
+Kullanıcının anlık isteği/damak zevki: [${state.userNote || 'Belirtilmedi'}]
+
+Talimatlar:
+1. Eğer kullanıcının özel bir diyet kısıtlaması veya alerjisi VARSA, bu profile uymayan ve kesinlikle tüketmemesi gereken "Riskli" (Kırmızı) veya "Dikkat Edilmesi Gereken" (Sarı) ürünleri tespit et ve nedenini kısaca açıkla.
+2. Eğer kullanıcının HİÇBİR kısıtlaması YOKSA, menüdeki standart yiyecekleri (örneğin popüler tatlılar, kahveler vb.) sadece kalorili diye "Riskli" olarak işaretleme. Sağlık problemi olmayan biri için popüler ve lezzetli menü seçeneklerini doğrudan "Güvenli" (Yeşil) olarak öner.
+3. Kullanıcının anlık isteği (damak zevki) belirtilmişse, menüden buna en uygun olanları "Güvenli/Uygun" (Yeşil) olarak öner.
+
+Yanıtı BANA KESİNLİKLE SADECE AŞAĞIDAKİ JSON ARRAY FORMATINDA DÖN, markdown (\`\`\`json vb.) KULLANMA, DOĞRUDAN DİZİ (ARRAY) DÖN:
 [
   {
-    "durum": "kirmizi",
-    "baslik": "Riskli Ürün",
+    "durum": "kirmizi", // kirmizi, sari veya yesil olabilir
+    "baslik": "Ürün Adı veya Kategori",
     "mesaj": "Açıklama burada..."
   }
 ]`;
