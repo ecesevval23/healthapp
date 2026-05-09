@@ -288,15 +288,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const analyzeWithGemini = async () => {
-        const url = \`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=\${API_KEY}\`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
         
         let parts = [];
         
-        const systemInstruction = \`Bir gıda/menü uzmanı gibi davran. Görüntüdeki veya metindeki içerikleri analiz et.
-Kullanıcının şu sağlık profiline [\${state.preferences.join(', ') || 'Belirtilmedi'}] göre:
+        const systemInstruction = `Bir gıda/menü uzmanı gibi davran. Görüntüdeki veya metindeki içerikleri analiz et.
+Kullanıcının şu sağlık profiline [${state.preferences.join(', ') || 'Belirtilmedi'}] göre:
 1. Riskli maddeleri bul.
 2. Neden riskli olduğunu açıkla.
-3. Eğer Cafe/Restoran ise kullanıcının şu damak zevki isteğine [\${state.userNote || 'Belirtilmedi'}] göre uygun yemekleri öner.
+3. Eğer Cafe/Restoran ise kullanıcının şu damak zevki isteğine [${state.userNote || 'Belirtilmedi'}] göre uygun yemekleri öner.
 Yanıtı BANA KESİNLİKLE SADECE AŞAĞIDAKİ JSON ARRAY FORMATINDA DÖN, markdown ( \`\`\`json vb.) KULLANMA, DOĞRUDAN DİZİ (ARRAY) DÖN:
 [
   {
@@ -304,12 +304,12 @@ Yanıtı BANA KESİNLİKLE SADECE AŞAĞIDAKİ JSON ARRAY FORMATINDA DÖN, markd
     "baslik": "Riskli Ürün",
     "mesaj": "Açıklama burada..."
   }
-]\`;
+]`;
 
         parts.push({ text: systemInstruction });
 
         if (state.scannedQRText) {
-            parts.push({ text: \`Menü/Ürün içeriği: \${state.scannedQRText}\` });
+            parts.push({ text: `Menü/Ürün içeriği: ${state.scannedQRText}` });
         }
 
         if (state.capturedImageBase64) {
@@ -336,7 +336,7 @@ Yanıtı BANA KESİNLİKLE SADECE AŞAĞIDAKİ JSON ARRAY FORMATINDA DÖN, markd
         });
 
         if (!response.ok) {
-            throw new Error(\`API Hatası: \${response.status}\`);
+            throw new Error(`API Hatası: ${response.status}`);
         }
 
         const data = await response.json();
@@ -344,7 +344,7 @@ Yanıtı BANA KESİNLİKLE SADECE AŞAĞIDAKİ JSON ARRAY FORMATINDA DÖN, markd
         
         try {
             // Clean up possible markdown wrappers if Gemini ignores instructions
-            textResult = textResult.replace(/\\`\\`\\`json/g, '').replace(/\\`\\`\\`/g, '').trim();
+            textResult = textResult.replace(/```json/gi, '').replace(/```/g, '').trim();
             const parsedResults = JSON.parse(textResult);
             renderGeminiResults(parsedResults);
         } catch (e) {
