@@ -370,7 +370,8 @@ Yanıtı BANA KESİNLİKLE SADECE AŞAĞIDAKİ JSON ARRAY FORMATINDA DÖN, markd
         });
 
         if (!response.ok) {
-            throw new Error(`API Hatası: ${response.status}`);
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(`API Hatası: ${response.status} - ${errorData.error || 'Bilinmeyen hata'}`);
         }
 
         const data = await response.json();
