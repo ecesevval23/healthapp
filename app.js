@@ -323,9 +323,10 @@ Kullanıcının profili: [${profileInfo}]
 Kullanıcının anlık isteği/damak zevki: [${state.userNote || 'Belirtilmedi'}]
 
 Talimatlar:
-1. Eğer kullanıcının özel bir diyet kısıtlaması veya alerjisi VARSA, bu profile uymayan ve kesinlikle tüketmemesi gereken "Riskli" (Kırmızı) veya "Dikkat Edilmesi Gereken" (Sarı) ürünleri tespit et ve nedenini kısaca açıkla.
-2. Eğer kullanıcının HİÇBİR kısıtlaması YOKSA, menüdeki standart yiyecekleri (örneğin popüler tatlılar, kahveler vb.) sadece kalorili diye "Riskli" olarak işaretleme. Sağlık problemi olmayan biri için popüler ve lezzetli menü seçeneklerini doğrudan "Güvenli" (Yeşil) olarak öner.
-3. Kullanıcının anlık isteği (damak zevki) belirtilmişse, menüden buna en uygun olanları "Güvenli/Uygun" (Yeşil) olarak öner.
+1. SADECE VE SADECE SANA VERİLEN MENÜDE (metin veya görsel) YER ALAN ÜRÜNLERİ DEĞERLENDİR. Menüde açıkça yazmayan hiçbir ürünü "varsa, eklenirse, şekersizse" gibi varsayımlarla önerme. Olmayan ürünler uydurma.
+2. Eğer kullanıcının özel bir diyet kısıtlaması (Diyabet vb.) VARSA, menüdeki ürünleri buna göre filtrele. Kullanıcının anlık isteği (örn. "çilekli") bu kısıtlamalarla çelişiyorsa (örn. çilekli pastalar şekerlidir), kullanıcının isteğine uyan ama sağlığına zararlı olan ürünleri "Riskli" (Kırmızı) olarak belirt ve nedenini açıkla.
+3. Kullanıcının sağlık kısıtlamalarına uyan hiçbir çilekli/istediği ürün yoksa, menüde gerçekten var olan en sağlıklı alternatifleri "Güvenli" (Yeşil) olarak öner.
+4. Eğer kullanıcının HİÇBİR kısıtlaması YOKSA, kalorili yiyecekleri gereksiz yere "Riskli" işaretleme, anlık isteğine en uygun menü öğelerini doğrudan "Güvenli" olarak öner.
 
 Yanıtı BANA KESİNLİKLE SADECE AŞAĞIDAKİ JSON ARRAY FORMATINDA DÖN, markdown (\`\`\`json vb.) KULLANMA, DOĞRUDAN DİZİ (ARRAY) DÖN:
 [
