@@ -100,8 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
             icon.textContent = '🛒';
             
             optionsContainer.innerHTML = `
-                <div class="h-full flex flex-col justify-center">
-                    <button id="btn-open-camera" class="w-full bg-gray-50 border-2 border-dashed border-primary/50 p-10 rounded-3xl flex flex-col items-center justify-center text-gray-600 hover:bg-primary/5 hover:border-primary transition-colors group">
+                <div class="h-full flex flex-col justify-center space-y-4">
+                    <button id="btn-open-camera" class="w-full bg-gray-50 border-2 border-dashed border-primary/50 p-8 rounded-3xl flex flex-col items-center justify-center text-gray-600 hover:bg-primary/5 hover:border-primary transition-colors group">
                         <div class="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                             <svg class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -111,6 +111,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="font-bold text-xl text-gray-800 mb-2">İçindekiler Kısmını Çek</span>
                         <span class="text-sm text-gray-500 text-center px-4">Ürünün arka yüzündeki metni okutun</span>
                     </button>
+
+                    <button id="btn-upload-gallery" class="w-full bg-gray-50 border border-gray-200 p-4 rounded-[1.5rem] flex items-center justify-center text-center hover:border-primary hover:bg-primary/5 hover:shadow-md transition-all group">
+                        <span class="text-2xl mr-3">🖼️</span>
+                        <span class="font-bold text-sm text-gray-800">Galeriden Ürün Fotoğrafı Seç</span>
+                    </button>
+                    <input type="file" id="file-upload-input" accept="image/*" class="hidden">
                 </div>
             `;
         } 
