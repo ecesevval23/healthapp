@@ -349,8 +349,8 @@ Yanıtı BANA KESİNLİKLE SADECE AŞAĞIDAKİ JSON ARRAY FORMATINDA DÖN, markd
         if (state.capturedImageBase64) {
             const base64Data = state.capturedImageBase64.split(',')[1];
             parts.push({
-                inline_data: {
-                    mime_type: "image/jpeg",
+                inlineData: {
+                    mimeType: "image/jpeg",
                     data: base64Data
                 }
             });
@@ -359,7 +359,7 @@ Yanıtı BANA KESİNLİKLE SADECE AŞAĞIDAKİ JSON ARRAY FORMATINDA DÖN, markd
         const payload = {
             contents: [{ parts: parts }],
             generationConfig: {
-                response_mime_type: "application/json"
+                responseMimeType: "application/json"
             }
         };
 
