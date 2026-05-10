@@ -342,10 +342,6 @@ Yanıtı BANA KESİNLİKLE SADECE AŞAĞIDAKİ JSON ARRAY FORMATINDA DÖN, markd
             parts.push({ text: `Menü/Ürün içeriği metni: ${state.scannedQRText}` });
         }
         
-        if (state.menuLinkUrl) {
-            parts.push({ text: `Lütfen bu linkteki menü içeriğini analiz et: ${state.menuLinkUrl}` });
-        }
-
         if (state.capturedImageBase64) {
             const base64Data = state.capturedImageBase64.split(',')[1];
             parts.push({
@@ -362,6 +358,10 @@ Yanıtı BANA KESİNLİKLE SADECE AŞAĞIDAKİ JSON ARRAY FORMATINDA DÖN, markd
                 responseMimeType: "application/json"
             }
         };
+
+        if (state.menuLinkUrl) {
+            payload.menuLinkUrl = state.menuLinkUrl;
+        }
 
         const response = await fetch(url, {
             method: 'POST',
