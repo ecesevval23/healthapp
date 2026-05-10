@@ -410,7 +410,13 @@ Yanıtı BANA KESİNLİKLE SADECE AŞAĞIDAKİ JSON ARRAY FORMATINDA DÖN, markd
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            throw new Error(`API Hatası: ${response.status} - ${errorData.error || 'Bilinmeyen hata'}`);
+            let errorMessage = errorData.error || 'Bilinmeyen hata';
+            
+            if (errorMessage.includes('429') || errorMessage.includes('RESOURCE_EXHAUSTED')) {
+                throw new Error("Çok fazla istek attınız (API Hız Limiti). Lütfen yaklaşık 1 dakika bekleyip tekrar deneyin.");
+            }
+            
+            throw new Error(`API Hatası: ${response.status} - ${errorMessage}`);
         }
 
         const data = await response.json();
