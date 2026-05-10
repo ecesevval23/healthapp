@@ -140,6 +140,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     </button>
                 </div>
 
+                <button id="btn-upload-gallery" class="w-full bg-gray-50 border border-gray-200 p-4 mb-4 rounded-[1.5rem] flex items-center justify-center text-center hover:border-primary hover:bg-primary/5 hover:shadow-md transition-all group">
+                    <span class="text-2xl mr-3">🖼️</span>
+                    <span class="font-bold text-sm text-gray-800">Galeriden Menü Fotoğrafı Seç</span>
+                </button>
+                <input type="file" id="file-upload-input" accept="image/*" class="hidden">
+
                 <button id="btn-open-link" class="w-full bg-gray-50 border border-gray-200 p-4 mb-4 rounded-[1.5rem] flex items-center justify-center text-center hover:border-primary hover:bg-primary/5 hover:shadow-md transition-all group">
                     <span class="text-2xl mr-3">🔗</span>
                     <span class="font-bold text-sm text-gray-800">İnternet Linki (URL) Gir</span>
@@ -180,6 +186,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const btnOpenQR = document.getElementById('btn-open-qr');
         if (btnOpenQR) btnOpenQR.addEventListener('click', startQRScanner);
+
+        const btnUploadGallery = document.getElementById('btn-upload-gallery');
+        const fileUploadInput = document.getElementById('file-upload-input');
+        
+        if (btnUploadGallery && fileUploadInput) {
+            btnUploadGallery.addEventListener('click', () => {
+                fileUploadInput.click();
+            });
+
+            fileUploadInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        state.capturedImageBase64 = event.target.result;
+                        
+                        const optionsContainer = document.getElementById('scanner-options');
+                        optionsContainer.classList.add('hidden');
+                        cameraContainer.classList.remove('hidden');
+                        cameraContainer.classList.add('flex');
+                        
+                        cameraVideo.classList.add('hidden');
+                        qrReaderDiv.classList.add('hidden');
+                        cameraPreview.src = event.target.result;
+                        cameraPreview.classList.remove('hidden');
+                        btnCapture.classList.add('hidden');
+                        btnRetake.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
     };
 
     // ==========================================
